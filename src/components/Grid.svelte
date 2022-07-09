@@ -37,8 +37,7 @@
     }
 
     .horizontal {
-        width: calc(100% + 2em);
-        left: -2em;
+        width: 100%;
         border-bottom: 1px dashed #ccc;
     }
 

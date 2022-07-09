@@ -53,7 +53,6 @@
     x={d => d.Miles_per_Gallon}
     y={d => d.Horsepower} />
 
-
 </main>
 
 <style>

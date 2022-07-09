@@ -1,7 +1,7 @@
 <script>
   import { scaleLinear } from "d3";
-  import Grid from "./Grid.svelte";
   import { createEventDispatcher } from "svelte";
+  import Scatterplot from "./Scatterplot.svelte";
 
   export let data = [];
   export let x;
@@ -52,7 +52,7 @@
   }
 
   function resetDrag() {
-    if(state && Math.abs(state.x0 - state.x1) < 5) {
+    if (state && Math.abs(state.x0 - state.x1) < 5) {
       state = null;
     }
   }
@@ -78,15 +78,15 @@
   }
 </script>
 
-<section class="chart">
-  <svg height="200px" width="200px">
-    {#each data as datum}
-      <circle
-        cx={xScale(x(datum))}
-        cy={yScale(y(datum))}
-        r="2px"
-        fill={color(datum)} />
-    {/each}
+<Scatterplot
+  data={data}
+  color={color}
+  xs={xs}
+  ys={ys}
+  x={x}
+  y={y}
+>
+  <g slot="svg">
     {#if state}
       <rect
         x={Math.min(state.x0, state.x1)}
@@ -94,42 +94,21 @@
         width={Math.abs(state.x1 - state.x0)}
         height={Math.abs(state.y1 - state.y0)}
         fill-opacity="0.3"
-        fill="hotpink" />
+        fill="hotpink"></rect>
     {/if}
-
-  </svg>
-
-  <div class="grids">
-    <Grid horizontal scale={xScale} count={5} />
-    <Grid vertical scale={yScale} count={5} />
-  </div>
+  </g>
 
   <div
+    slot="html"
     class="target"
     on:mousedown={dragStart}
     on:mouseup={dragStop}
     on:mousemove={dragMove}
     on:click={resetDrag}></div>
-</section>
+
+</Scatterplot>
 
 <style>
-    svg {
-        position: absolute;
-    }
-
-    .chart {
-        position: relative;
-        width: 200px;
-        height: 200px;
-        margin: 50px;
-    }
-
-    .grids {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-    }
-
     .target {
         position: absolute;
         width: 200px;

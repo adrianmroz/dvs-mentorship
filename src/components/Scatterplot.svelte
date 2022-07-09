@@ -15,7 +15,6 @@
 </script>
 
 <section class="chart">
-
   <svg height="200px" width="200px">
     {#each data as datum}
       <circle
@@ -24,20 +23,18 @@
         r="2px"
         fill={color(datum)} />
     {/each}
+    <slot name="svg" xScale={xScale} yScale={yScale} />
   </svg>
 
   <div class="grids">
     <Grid horizontal scale={xScale} count={5} />
     <Grid vertical scale={yScale} count={5} />
+    <slot name="html" xScale={xScale} yScale={yScale} />
   </div>
 
 </section>
 
 <style>
-    svg {
-        position: absolute;
-    }
-
     .chart {
         position: relative;
         width: 200px;
@@ -45,7 +42,11 @@
         margin: 50px;
     }
 
-    .grids {
+    svg {
+        position: absolute;
+    }
+
+    div {
         position: absolute;
         width: 200px;
         height: 200px;
